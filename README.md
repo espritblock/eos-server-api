@@ -49,6 +49,10 @@ mainAccount
 
 ```bash
 
+创建私钥
+
+POST http://localhost:7001/createKey
+
 签名校验
 
 POST http://localhost:7001/sign/verify 

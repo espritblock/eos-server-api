@@ -12,6 +12,15 @@ module.exports = app => {
    * 签名验证
    * @param {post body} 
    * {
+   * seed 种子
+   * } 
+   */
+  router.post('/createKey', controller.home.createKey);
+
+  /**
+   * 签名验证
+   * @param {post body} 
+   * {
    * sign   签名信息,
    * src    原始数据,
    * pubkey 公钥

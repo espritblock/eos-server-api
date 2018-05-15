@@ -45,6 +45,25 @@ const success = (data) =>{
 class HomeController extends Controller {
 
   /**
+   * 生成私钥
+   */
+  async createKey(){
+    const { ctx } = this;
+    try{
+      let params = ctx.request.body;
+      if(!params.seed){
+        this.ctx.body = error("参数错误");
+        return;
+      }
+      let privateKey = ecc.seedPrivate(params.seed);
+      let publicKey = ecc.privateToPublic(pk);
+      this.ctx.body = success({privateKey,publicKey});
+    }catch(e){
+      this.ctx.body = error(e);
+    }
+  }
+
+  /**
    * 签名验证
    */
   async verify(){
@@ -119,7 +138,7 @@ class HomeController extends Controller {
   async transfer(){
     const { ctx } = this;
     try{
-      let params = ctx.params;
+      let params = ctx.request.body;
       if(!params.to || !params.quantity || !params.mome){
         this.ctx.body = error("参数错误");
         return;
