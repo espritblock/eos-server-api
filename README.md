@@ -12,9 +12,11 @@ install eos node server
 
 see https://github.com/espritblock/eos.git
 
-use eosjs see https://github.com/EOSIO/eosjs.git 
+### USE LIB
 
-see egg see https://github.com/eggjs/egg.git
+eosjs https://github.com/EOSIO/eosjs.git 
+
+egg  https://github.com/eggjs/egg.git
 
 ### Development
 
@@ -51,31 +53,31 @@ mainAccount
 
 创建私钥
 
-POST http://localhost:7001/createKey
+curl -i -X POST http://localhost:7001/createKey -d seed=abc
 
 签名校验
 
-POST http://localhost:7001/sign/verify 
+curl -i -X POST http://localhost:7001/sign/verify -d sign=aaa -d src=aaa -d pubkey=aaa
 
 创建账户
 
-POST http://localhost:7001/account/create
+curl -i -X POST http://localhost:7001/account/create -d username=aaa -d active=aaa -d onwer=aaa
 
 转账
 
-POST http://localhost:7001/transfer
+curl -i -X POST http://localhost:7001/transfer -d to=eosio -d quantity='1.0000 ABC' -d mome=aaa
 
 查询账户
 
-GET http://localhost:7001/account/info/:account
+curl http://localhost:7001/account/info/eosio
 
 查询余额
 
-GET http://localhost:7001/balance/:contract/:account
+curl http://localhost:7001/balance/eosio/eosio
 
 交易查询
 
-GET http://localhost:7001/transactions/:name/:page/:size
+curl http://localhost:7001/transactions/eosio/0/10
 
 
 ```
