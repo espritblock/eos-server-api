@@ -1,6 +1,6 @@
 # Eos-api
 
-eos api server
+eos api server upgrade to dawn4
 
 ## QuickStart
 
@@ -75,9 +75,9 @@ curl http://localhost:7001/account/info/eosio
 
 curl http://localhost:7001/balance/eosio/eosio
 
-交易查询
+交易查询,查询交易列表接口官方已经废弃，只有通过交易ID查询接口
 
-curl http://localhost:7001/transactions/eosio/0/10
+curl http://localhost:7001/transactions/tid
 
 
 ```

@@ -69,6 +69,6 @@ module.exports = app => {
    * @param {页数} page
    * @param {条数} size
    */
-  router.get('/transactions/:name/:page/:size', controller.home.getTransactions);
+  router.get('/transactions/:tid', controller.home.getTransactions);
 
 };

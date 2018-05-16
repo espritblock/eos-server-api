@@ -14,7 +14,7 @@ const pk = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3";
 /**
  * eos服务
  */
-const eosServer = "http://127.0.0.1:8888"; 
+const eosServer = "http://112.74.202.161:8888"; 
 
 /**
  * 主账户
@@ -143,12 +143,14 @@ class HomeController extends Controller {
         this.ctx.body = error("参数错误");
         return;
       }
-      await eoss.transfer({from:'eosio', to:params.to, quantity:params.quantity, memo:params.mome}).then((r)=>{
+      await eos.transfer({from:'eosio', to:params.to, quantity:params.quantity, memo:params.mome}).then((r)=>{
         this.ctx.body = success(r);
       }).catch((e)=>{
+        console.error(e)
         this.ctx.body = error();
       });
     }catch(e){
+      console.error(e)
       this.ctx.body = error(e);
     }
   }
@@ -183,12 +185,11 @@ async getTransactions(){
     const { ctx } = this;  
     try{
       let params = ctx.params;
-      if(!params.name || !params.page || !params.size){
+      if(!params.tid){
         this.ctx.body = error("参数错误");
         return;
       }
-      let start = params.page * params.size;
-      await eos.getTransactions(params.name,start,params.size).then(result => {
+      await eos.getTransaction(params.tid).then(result => {
         if(result){
           this.ctx.body = success(result);;
         }else{
@@ -196,6 +197,7 @@ async getTransactions(){
         }
       });
     }catch(e){
+      console.error(e);
       this.ctx.body = error(e);
     }
   }
