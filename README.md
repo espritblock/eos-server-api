@@ -81,3 +81,7 @@ curl http://localhost:7001/transactions/eosio/0/10
 
 
 ```
+
+# join eos open source 
+
+	wechat hl_294944589
