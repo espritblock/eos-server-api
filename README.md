@@ -61,7 +61,7 @@ curl -i -X POST http://localhost:7001/sign/verify -d sign=aaa -d src=aaa -d pubk
 
 创建账户
 
-curl -i -X POST http://localhost:7001/account/create -d username=aaaaaaaaaaaaaaaa -d active=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV -d owner=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+curl -i -X POST http://localhost:7001/account/create -d username=aaaaaaaaaaaa -d active=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV -d owner=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 
 转账
 
