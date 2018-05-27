@@ -1,6 +1,6 @@
 # Eos-api
 
-eos api server upgrade to dawn4
+eos api server  upgrade to 4.2
 
 ## QuickStart
 
