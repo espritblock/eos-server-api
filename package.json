@@ -7,7 +7,7 @@
     "binaryen": "^45.0.0",
     "egg": "^2.2.1",
     "egg-scripts": "^2.5.0",
-    "eosjs": "^11.0.0"
+    "eosjs": "^13.0.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

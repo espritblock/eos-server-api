@@ -139,11 +139,12 @@ class HomeController extends Controller {
     const { ctx } = this;
     try{
       let params = ctx.request.body;
-      if(!params.to || !params.quantity || !params.mome){
+      if(!params.from || !params.pk || !params.to || !params.quantity || !params.mome){
         this.ctx.body = error("参数错误");
         return;
       }
-      await eos.transfer({from:'eosio', to:params.to, quantity:params.quantity, memo:params.mome}).then((r)=>{
+      const eoss = Eos.Localnet({binaryen,keyProvider:[params.pk],httpEndpoint:eosServer});
+      await eoss.transfer({from:params.from, to:params.to, quantity:params.quantity, memo:params.mome}).then((r)=>{
         this.ctx.body = success(r);
       }).catch((e)=>{
         console.error(e)

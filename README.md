@@ -65,7 +65,7 @@ curl -i -X POST http://localhost:7001/account/create -d username=aaa -d active=a
 
 转账
 
-curl -i -X POST http://localhost:7001/transfer -d to=eosio -d quantity='1.0000 ABC' -d mome=aaa
+curl -i -X POST http://localhost:7001/transfer -d pk=5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3 -d from=eosio -d to=inita -d quantity='1.0000 SYS' -d mome=aaa
 
 查询账户
 
@@ -75,7 +75,7 @@ curl http://localhost:7001/account/info/eosio
 
 curl http://localhost:7001/balance/eosio/eosio
 
-交易查询,查询交易列表接口官方已经废弃，只有通过交易ID查询接口
+交易查询
 
 curl http://localhost:7001/transactions/tid
 
