@@ -57,6 +57,12 @@ module.exports = app => {
   router.get('/account/info/:account', controller.home.accountInfo);
 
   /**
+   * 公钥查询账户
+   * @param {账户名称} account
+   */
+  router.get('/account/key/:publickey', controller.home.getAccountByKey);
+
+  /**
    * 查询余额
    * @param {合约账户} contract
    * @param {查询扎根和} account
@@ -65,10 +71,16 @@ module.exports = app => {
 
   /**
    * 交易查询
-   * @param {合约账户} name
+   * @param {交易id} tid
+   */
+  router.get('/transaction/:tid', controller.home.getTransaction);
+
+   /**
+   * 交易查询-此方法已废弃
+   * @param {交易id} account
    * @param {页数} page
    * @param {条数} size
    */
-  router.get('/transactions/:tid', controller.home.getTransactions);
+  router.get('/transactions/:account/:page/:size', controller.home.getTransactions);
 
 };

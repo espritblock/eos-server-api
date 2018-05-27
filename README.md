@@ -61,7 +61,7 @@ curl -i -X POST http://localhost:7001/sign/verify -d sign=aaa -d src=aaa -d pubk
 
 创建账户
 
-curl -i -X POST http://localhost:7001/account/create -d username=aaa -d active=aaa -d onwer=aaa
+curl -i -X POST http://localhost:7001/account/create -d username=aaaaaaaaaaaaaaaa -d active=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV -d owner=EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
 
 转账
 
@@ -71,13 +71,19 @@ curl -i -X POST http://localhost:7001/transfer -d pk=5KQwrPbwdL6PhXujxW37FSSQZ1J
 
 curl http://localhost:7001/account/info/eosio
 
+通过公钥查询账户
+
+curl http://localhost:7001/account/key/EOS6MRyAjQq8ud7hVNYcfnVPJqcVpscN5So8BhtHuGYqET5GDW5CV
+
 查询余额
 
-curl http://localhost:7001/balance/eosio/eosio
+curl http://localhost:7001/balance/eosio.token/eosio
 
 交易查询
 
 curl http://localhost:7001/transactions/tid
+
+
 
 
 ```

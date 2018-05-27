@@ -21,6 +21,16 @@ const eosServer = "http://112.74.202.161:8888";
  */
 const mainAccount = "eosio";
 
+/**
+ * 给用户抵押的数量-用于网络使用
+ */
+const stake_net_quantity = "1 SYS";
+
+/**
+ * 给用户抵押的数量-用于cpu使用
+ */
+const stake_cpu_quantity = "1 SYS";
+
 const eos = Eos.Localnet({binaryen,keyProvider:[pk],httpEndpoint:eosServer});
 
 /**
@@ -56,7 +66,7 @@ class HomeController extends Controller {
         return;
       }
       let privateKey = ecc.seedPrivate(params.seed);
-      let publicKey = ecc.privateToPublic(pk);
+      let publicKey = ecc.privateToPublic(privateKey);
       this.ctx.body = success({privateKey,publicKey});
     }catch(e){
       this.ctx.body = error(e);
@@ -92,18 +102,34 @@ class HomeController extends Controller {
         this.ctx.body = error("参数错误");
         return;
       }
-      let result = await eos.newaccount({
-        creator: mainAccount,
-        name: params.username,
-        owner: params.owner,
-        active: params.active,
-        recovery: mainAccount
+      await eos.transaction(tr => {
+        tr.newaccount({
+          creator: mainAccount,
+          name: params.username,
+          owner: params.owner,
+          active: params.active
+        })
+        tr.buyrambytes({
+          payer: mainAccount,
+          receiver: params.username,
+          bytes: 8000
+        })
+        tr.delegatebw({
+          from: mainAccount,
+          receiver: params.username,
+          stake_net_quantity:stake_net_quantity,
+          stake_cpu_quantity:stake_cpu_quantity,
+          transfer: 0
+        })
+      }).then(result => {
+        if(result){
+          this.ctx.body = success(result);
+        }else{
+          this.ctx.body = error();
+        }
+      }).catch(e =>{
+        this.ctx.body = error(e);
       });
-      if(result){
-        this.ctx.body = success(result);
-      }else{
-        this.ctx.body = error();
-      }
     }catch(e){
         this.ctx.body = error(e);
     }
@@ -124,7 +150,7 @@ class HomeController extends Controller {
         if(result){
           this.ctx.body = success(result);
         }else{
-          error();
+          this.ctx.body = error();
         }
       });
     }catch(e){
@@ -147,11 +173,9 @@ class HomeController extends Controller {
       await eoss.transfer({from:params.from, to:params.to, quantity:params.quantity, memo:params.mome}).then((r)=>{
         this.ctx.body = success(r);
       }).catch((e)=>{
-        console.error(e)
-        this.ctx.body = error();
+        this.ctx.body = error(e);
       });
     }catch(e){
-      console.error(e)
       this.ctx.body = error(e);
     }
   }
@@ -173,6 +197,8 @@ class HomeController extends Controller {
       }else{
         this.ctx.body = error();
       }
+    }).catch(e=>{
+      this.ctx.body = error(e);
     });
   }catch(e){
     this.ctx.body = error();
@@ -182,7 +208,7 @@ class HomeController extends Controller {
 /**
  * 交易查询
  */
-async getTransactions(){
+async getTransaction(){
     const { ctx } = this;  
     try{
       let params = ctx.params;
@@ -196,12 +222,72 @@ async getTransactions(){
         }else{
           this.ctx.body = error();
         }
+      }).catch(e=>{
+        this.ctx.body = error(e);
       });
     }catch(e){
-      console.error(e);
       this.ctx.body = error(e);
     }
   }
+
+  /**
+   * 交易查询----此方法官方去掉了
+   */
+  async getTransactions(){
+    const { ctx } = this;  
+    try{
+      let params = ctx.params;
+      if(!params.account || !params.page || !params.size){
+        this.ctx.body = error("参数错误");
+        return;
+      }
+     
+      let start = (params.page-1)*params.size;
+      console.error(start)
+      await eos.getTransactions({
+        account_name:params.account,
+        skip_seq:start,
+        num_seq:params.size
+      }).then(result => {
+        if(result){
+          this.ctx.body = success(result);;
+        }else{
+          this.ctx.body = error();
+        }
+      }).catch(e=>{
+        this.ctx.body = error(e);
+      });
+    }catch(e){
+      console.error(start)
+      this.ctx.body = error(e);
+    }
+  }
+
+   /**
+   * account
+   */
+  async getAccountByKey(){
+    const { ctx } = this;  
+    try{
+      let params = ctx.params;
+      if(!params.publickey){
+        this.ctx.body = error("参数错误");
+        return;
+      }
+      await eos.getKeyAccounts({public_key:params.publickey}).then(result => {
+        if(result){
+          this.ctx.body = success(result);;
+        }else{
+          this.ctx.body = error();
+        }
+      }).catch(e=>{
+        this.ctx.body = error(e);
+      });
+    }catch(e){
+      this.ctx.body = error(e);
+    }
+  }
+
 }
 
 module.exports = HomeController;
