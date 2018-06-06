@@ -1,6 +1,6 @@
 # Eos-api
 
-eos api server  upgrade to 4.2
+eos api server  upgrade to eosio 1.0.1
 
 ## QuickStart
 

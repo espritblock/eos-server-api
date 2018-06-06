@@ -14,7 +14,7 @@ const pk = "5KQwrPbwdL6PhXujxW37FSSQZ1JiwsST4cqQzDeyXtP79zkvFD3";
 /**
  * eos服务
  */
-const eosServer = "http://112.74.202.161:8888"; 
+const eosServer = "http://54.238.242.48:8888"; 
 
 /**
  * 主账户
